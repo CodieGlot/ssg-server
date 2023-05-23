@@ -1,17 +1,10 @@
 import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
-import {
-    ApiAcceptedResponse,
-    ApiCreatedResponse,
-    ApiOkResponse,
-    ApiOperation,
-    ApiTags
-} from '@nestjs/swagger';
+import { ApiAcceptedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 import { ResponseDto } from '../../common/dto';
 import { UserRole } from '../../constants';
 import { Auth, AuthUser } from '../../decorators';
-import { CreateUsersDto, ResetPasswordDto, UserInfoDto } from './dto/request';
-import { UserDto } from './dto/response';
+import { ResetPasswordDto } from './dto/request';
 import { User } from './entities';
 import { UsersService } from './users.service';
 
@@ -19,48 +12,6 @@ import { UsersService } from './users.service';
 @Controller('users')
 export class UsersController {
     constructor(private readonly usersService: UsersService) {}
-
-    @Post('create')
-    @Auth([UserRole.ADMIN])
-    @HttpCode(HttpStatus.CREATED)
-    @ApiCreatedResponse({
-        type: UserDto,
-        description: 'Create a new user'
-    })
-    @ApiOperation({ summary: 'Create a new user' })
-    async createUser(@Body() userInfoDto: UserInfoDto) {
-        const user = await this.usersService.createUser(userInfoDto);
-
-        return user.toResponseDto();
-    }
-
-    @Post('create-multiple')
-    @Auth([UserRole.ADMIN])
-    @HttpCode(HttpStatus.CREATED)
-    @ApiCreatedResponse({
-        type: [UserDto],
-        description: 'Create new users'
-    })
-    @ApiOperation({ summary: 'Create new users' })
-    async createUsers(@Body() createUsersDto: CreateUsersDto) {
-        const users = await this.usersService.createUsers(createUsersDto);
-
-        return users.map((user) => user?.toResponseDto());
-    }
-
-    @Get()
-    @Auth([UserRole.ADMIN])
-    @HttpCode(HttpStatus.OK)
-    @ApiOkResponse({
-        type: [User],
-        description: 'Get all participants'
-    })
-    @ApiOperation({ summary: 'Get all participants' })
-    async getAllParticipants() {
-        const users = await this.usersService.getAllParticipants();
-
-        return users.map((user) => user.toResponseDto());
-    }
 
     @Get(':id')
     @Auth([UserRole.ADMIN])

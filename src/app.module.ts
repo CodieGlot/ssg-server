@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import './boilerplate.polyfill';
 
 import { Module } from '@nestjs/common';
@@ -9,6 +10,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { ApiConfigService } from './shared/services/api-config.service';
 import { SharedModule } from './shared/shared.module';
+import { BlogsModule } from './modules/blogs/blogs.module';
 
 @Module({
     imports: [
@@ -23,7 +25,8 @@ import { SharedModule } from './shared/shared.module';
         }),
         AuthModule,
         UsersModule,
-        ScheduleModule.forRoot()
+        ScheduleModule.forRoot(),
+        BlogsModule
     ],
     providers: []
 })

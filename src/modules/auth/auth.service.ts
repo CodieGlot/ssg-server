@@ -36,7 +36,6 @@ export class AuthService {
                     role: data.role
                 },
                 {
-                    // set expired date refresh token
                     expiresIn: TimeExpression.ONE_WEEK
                 }
             )
