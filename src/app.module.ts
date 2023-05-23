@@ -6,6 +6,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthModule } from './modules/auth/auth.module';
+import { BlogsModule } from './modules/blogs/blogs.module';
 import { UsersModule } from './modules/users/users.module';
 import { ApiConfigService } from './shared/services/api-config.service';
 import { SharedModule } from './shared/shared.module';
@@ -23,7 +24,8 @@ import { SharedModule } from './shared/shared.module';
         }),
         AuthModule,
         UsersModule,
-        ScheduleModule.forRoot()
+        ScheduleModule.forRoot(),
+        BlogsModule
     ],
     providers: []
 })
