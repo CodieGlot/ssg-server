@@ -11,6 +11,7 @@ import { ApiConfigService } from './shared/services/api-config.service';
 import { SharedModule } from './shared/shared.module';
 import { BlogsModule } from './modules/blogs/blogs.module';
 import { CommentsModule } from './modules/comments/comments.module';
+import { MarketplaceModule } from './modules/marketplace/marketplace.module';
 
 @Module({
     imports: [
@@ -27,7 +28,8 @@ import { CommentsModule } from './modules/comments/comments.module';
         UsersModule,
         ScheduleModule.forRoot(),
         BlogsModule,
-        CommentsModule
+        CommentsModule,
+        MarketplaceModule
     ],
     providers: []
 })
