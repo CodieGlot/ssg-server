@@ -10,12 +10,12 @@ export class Product extends AbstractEntity<ProductDto> {
     @Column()
     name: string;
 
-    @Column()
+    @Column({ type: 'int' })
     price: number;
 
-    @Column({ nullable: true })
+    @Column()
     imageUrl: string;
 
-    @Column({ nullable: true })
+    @Column()
     description: string;
 }
