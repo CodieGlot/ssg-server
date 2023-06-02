@@ -26,6 +26,10 @@ export class MarketplaceService {
         return new ResponseDto({ message: 'Product created successfully' });
     }
 
+    async getAllProducts() {
+        return this.productRepository.find();
+    }
+
     async getProductById(id: string) {
         return this.productRepository.findOne({ where: { id } });
     }

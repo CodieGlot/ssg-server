@@ -31,6 +31,18 @@ export class MarketplaceController {
         return this.marketplaceService.createProduct(createProductDto);
     }
 
+    @Get('product')
+    //@Auth([UserRole.ADMIN, UserRole.USER])
+    @HttpCode(HttpStatus.OK)
+    @ApiOkResponse({
+        type: Product,
+        description: 'Get all products'
+    })
+    @ApiOperation({ summary: 'Get all products' })
+    async getAllProducts() {
+        return this.marketplaceService.getAllProducts();
+    }
+
     @Get('product/:id')
     //@Auth([UserRole.ADMIN, UserRole.USER])
     @HttpCode(HttpStatus.OK)
