@@ -4,7 +4,7 @@ export class CreateProductDto {
     @StringField()
     name: string;
 
-    @NumberField({ minimum: 0 })
+    @NumberField({ int: true, minimum: 1000 })
     price: number;
 
     @StringField()
