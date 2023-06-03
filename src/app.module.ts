@@ -27,7 +27,7 @@ import { MarketplaceModule } from './modules/marketplace/marketplace.module';
         AuthModule,
         UsersModule,
         ScheduleModule.forRoot(),
-        BlogsModule,
+        //BlogsModule,
         CommentsModule,
         MarketplaceModule
     ],

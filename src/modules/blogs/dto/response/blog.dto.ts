@@ -5,21 +5,14 @@ import type { Blog } from '../../entities';
 
 export class BlogDto extends AbstractDto {
     @ApiProperty()
-    title: string;
-
-    @ApiProperty()
-    content: string;
-
-    @ApiProperty()
-    author: string;
+    postId: string;
 
     @ApiProperty()
     likes: number;
 
     constructor(dto: Blog) {
         super(dto);
-        this.title = dto.title;
-        this.content = dto.content;
-        this.author = dto.author;
+        this.postId = dto.postId;
+        this.likes = dto.likes;
     }
 }
