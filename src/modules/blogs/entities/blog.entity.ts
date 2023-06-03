@@ -7,15 +7,9 @@ import { BlogDto } from '../dto/response';
 @Entity()
 @UseDto(BlogDto)
 export class Blog extends AbstractEntity<BlogDto> {
-    @Column({ type: 'varchar' })
-    title: string;
-
-    @Column({ type: 'text' })
-    content: string;
-
     @Column()
-    author: string;
+    postId: string;
 
-    @Column({ type: 'int', default: 0 })
+    @Column({type: 'int', default: 0})
     likes: number;
 }
