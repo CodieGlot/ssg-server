@@ -10,7 +10,6 @@ import { UsersModule } from './modules/users/users.module';
 import { ApiConfigService } from './shared/services/api-config.service';
 import { SharedModule } from './shared/shared.module';
 import { BlogsModule } from './modules/blogs/blogs.module';
-import { CommentsModule } from './modules/comments/comments.module';
 import { MarketplaceModule } from './modules/marketplace/marketplace.module';
 
 @Module({
@@ -27,8 +26,7 @@ import { MarketplaceModule } from './modules/marketplace/marketplace.module';
         AuthModule,
         UsersModule,
         ScheduleModule.forRoot(),
-        //BlogsModule,
-        CommentsModule,
+        BlogsModule,
         MarketplaceModule
     ],
     providers: []

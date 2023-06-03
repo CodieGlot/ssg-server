@@ -4,61 +4,43 @@ import { Repository } from 'typeorm';
 
 import { ResponseDto } from '../../common/dto';
 import type { User } from '../users/entities';
-import type { CreateBlogDto, UpdateBlogDto } from './dto/request';
-import { Blog } from './entities';
+import { Blog, Comment } from './entities';
+import { AddCommentDto } from './dto/request';
 
 @Injectable()
 export class BlogsService {
     constructor(
         @InjectRepository(Blog)
-        private readonly blogRepository: Repository<Blog>
+        private readonly blogRepository: Repository<Blog>,
+        @InjectRepository(Comment)
+        private readonly commentRepository: Repository<Comment>
     ) {}
 
-    async create(dto: CreateBlogDto, author: string) {
-        const postEntity = this.blogRepository.create({ ...dto, author });
-
-        await this.blogRepository.save(postEntity);
-
-        return new ResponseDto({ message: 'Blog created successfully' });
-    }
-
-    async findAll() {
+    async findAllBlogs() {
         return this.blogRepository.find();
     }
 
-    async findBlogById(id: string) {
-        return this.blogRepository.findOne({ where: { id } });
-    }
-
-    async findAllBlogsOfUser(username: string) {
-        return this.blogRepository.find({ where: { author: username } });
-    }
-
-    async updateBlogById(id: string, dto: UpdateBlogDto) {
-        const blog = await this.findBlogById(id);
+    async findBlogById(id: string, getComments = true) {
+        const blog = getComments
+            ? await this.blogRepository.findOne({ where: { id }, relations: ['comments'] })
+            : await this.blogRepository.findOne({ where: { id } });
 
         if (!blog) {
-            throw new NotFoundException('Blog Not Found');
+            throw new NotFoundException('Blog not found');
         }
 
-        await this.blogRepository.update(id, dto);
-
-        return new ResponseDto({ message: 'Blog updated successfully' });
+        return blog;
     }
 
-    async deleteBlogById(id: string, user: User) {
+    async addComment(id: string, dto: AddCommentDto) {
         const blog = await this.findBlogById(id);
 
-        if (!blog) {
-            throw new NotFoundException('Blog Not Found');
-        }
+        const commentEntity = this.commentRepository.create({ username: 'Anonymous', content: dto.content });
 
-        if (blog.author !== user.username) {
-            throw new UnauthorizedException('Unauthorized');
-        }
+        blog.comments.push(commentEntity);
 
-        await this.blogRepository.delete(id);
+        await this.blogRepository.save(blog);
 
-        return new ResponseDto({ message: 'Blog deleted successfully' });
+        return new ResponseDto({ message: 'Add comment successfully' });
     }
 }

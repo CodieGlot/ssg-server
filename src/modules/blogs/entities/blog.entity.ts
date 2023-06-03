@@ -1,8 +1,9 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 import { AbstractEntity } from '../../../common/abstract.entity';
 import { UseDto } from '../../../decorators';
 import { BlogDto } from '../dto/response';
+import { Comment } from './comment.entity';
 
 @Entity()
 @UseDto(BlogDto)
@@ -10,6 +11,11 @@ export class Blog extends AbstractEntity<BlogDto> {
     @Column()
     postId: string;
 
-    @Column({type: 'int', default: 0})
+    @Column({ type: 'int', default: 0 })
     likes: number;
+
+    @OneToMany(() => Comment, (comment) => comment.blog, {
+        cascade: true
+    })
+    comments: Comment[];
 }
