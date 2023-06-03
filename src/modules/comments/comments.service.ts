@@ -1,26 +1,58 @@
-import { Injectable } from '@nestjs/common';
-import { CreateCommentDto } from './dto/create-comment.dto';
-import { UpdateCommentDto } from './dto/update-comment.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+
+import { ResponseDto } from '../../common/dto';
+import { Comment } from './entities';
+import { CreateCommentDto, UpdateCommentDto } from './dto/request';
 
 @Injectable()
 export class CommentsService {
-  create(createCommentDto: CreateCommentDto) {
-    return 'This action adds a new comment';
-  }
+    constructor(
+        @InjectRepository(Comment)
+        private readonly commentRepository: Repository<Comment>
+    ) {}
 
-  findAll() {
-    return `This action returns all comments`;
-  }
+    async createComment(dto: CreateCommentDto) {
+        const commentEntity = this.commentRepository.create({
+            username: dto.username,
+            content: dto.content,
+        });
 
-  findOne(id: number) {
-    return `This action returns a #${id} comment`;
-  }
+        await this.commentRepository.save(commentEntity);
 
-  update(id: number, updateCommentDto: UpdateCommentDto) {
-    return `This action updates a #${id} comment`;
-  }
+        return new ResponseDto({ message: 'Comment created successfully' });
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} comment`;
-  }
+    async getAllComments() {
+        return this.commentRepository.find();
+    }
+
+    async getCommentById(id: string) {
+        return this.commentRepository.findOne({ where: { id } });
+    }
+
+    async updateCommentById(id: string, dto: UpdateCommentDto) {
+        const comment = await this.getCommentById(id);
+
+        if (!comment) {
+            throw new BadRequestException('Comment not found');
+        }
+
+        await this.commentRepository.update(id, dto);
+
+        return new ResponseDto({ message: 'Comment updated successfully' });
+    }
+
+    async deleteCommentById(id: string) {
+        const comment = await this.getCommentById(id);
+
+        if (!comment) {
+            throw new BadRequestException('Comment not found');
+        }
+
+        await this.commentRepository.delete(id);
+
+        return new ResponseDto({ message: 'Comment deleted successfully' });
+    }
 }
