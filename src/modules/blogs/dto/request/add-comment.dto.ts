@@ -1,4 +1,4 @@
-import { StringField } from 'src/decorators';
+import { StringField } from '../../../../decorators';
 
 export class AddCommentDto {
     @StringField()
