@@ -40,6 +40,7 @@
         "@aws-sdk/client-s3": "^3.218.0",
         "@aws-sdk/client-ses": "^3.218.0",
         "@aws-sdk/s3-request-presigner": "^3.218.0",
+        "@candypay/checkout-sdk": "^0.1.56",
         "@faker-js/faker": "^7.6.0",
         "@nestjs/axios": "^1.0.0",
         "@nestjs/common": "^9.2.1",

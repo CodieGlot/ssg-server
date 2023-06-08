@@ -20,7 +20,7 @@ export class MarketplaceController {
     constructor(private readonly marketplaceService: MarketplaceService) {}
 
     @Post('product')
-    //@Auth([UserRole.ADMIN])
+    @Auth([UserRole.ADMIN])
     @HttpCode(HttpStatus.CREATED)
     @ApiCreatedResponse({
         type: ResponseDto,
@@ -32,7 +32,7 @@ export class MarketplaceController {
     }
 
     @Get('product')
-    //@Auth([UserRole.ADMIN, UserRole.USER])
+    @Auth([UserRole.ADMIN, UserRole.USER])
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         type: Product,
@@ -44,7 +44,7 @@ export class MarketplaceController {
     }
 
     @Get('product/:id')
-    //@Auth([UserRole.ADMIN, UserRole.USER])
+    @Auth([UserRole.ADMIN, UserRole.USER])
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         type: Product,
@@ -56,7 +56,7 @@ export class MarketplaceController {
     }
 
     @Patch('product/:id')
-    //@Auth([UserRole.ADMIN])
+    @Auth([UserRole.ADMIN])
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         type: ResponseDto,
@@ -68,7 +68,7 @@ export class MarketplaceController {
     }
 
     @Delete('product/:id')
-    //@Auth([UserRole.ADMIN])
+    @Auth([UserRole.ADMIN])
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         type: ResponseDto,
