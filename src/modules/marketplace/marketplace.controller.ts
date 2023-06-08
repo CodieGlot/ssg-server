@@ -32,7 +32,6 @@ export class MarketplaceController {
     }
 
     @Get('product')
-    @Auth([UserRole.ADMIN, UserRole.USER])
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         type: Product,
@@ -44,7 +43,6 @@ export class MarketplaceController {
     }
 
     @Get('product/:id')
-    @Auth([UserRole.ADMIN, UserRole.USER])
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         type: Product,
