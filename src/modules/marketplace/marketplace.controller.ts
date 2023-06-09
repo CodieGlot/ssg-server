@@ -12,7 +12,7 @@ import { UserRole } from '../../constants';
 import { Auth, AuthUser } from '../../decorators';
 import { MarketplaceService } from './marketplace.service';
 import { Product } from './entities';
-import { CreateProductDto, UpdateProductDto } from './dto/request';
+import { CreateMultipleProductsDto, CreateProductDto, UpdateProductDto } from './dto/request';
 
 @ApiTags('marketplace')
 @Controller('marketplace')
@@ -29,6 +29,18 @@ export class MarketplaceController {
     @ApiOperation({ summary: 'Create product' })
     async createProduct(@Body() createProductDto: CreateProductDto) {
         return this.marketplaceService.createProduct(createProductDto);
+    }
+
+    @Post('product/multiple')
+    @Auth([UserRole.ADMIN])
+    @HttpCode(HttpStatus.CREATED)
+    @ApiCreatedResponse({
+        type: ResponseDto,
+        description: 'Create multiple products'
+    })
+    @ApiOperation({ summary: 'Create multiple products' })
+    async createMultipleProducts(@Body() dto: CreateMultipleProductsDto) {
+        return this.marketplaceService.createMultipleProducts(dto);
     }
 
     @Get('product')

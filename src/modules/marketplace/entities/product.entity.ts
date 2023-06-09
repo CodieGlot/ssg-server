@@ -17,5 +17,8 @@ export class Product extends AbstractEntity<ProductDto> {
     imageUrl: string;
 
     @Column()
+    type: string;
+
+    @Column()
     description: string;
 }

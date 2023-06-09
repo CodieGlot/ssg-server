@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import { ResponseDto } from '../../common/dto';
 import { Product } from './entities';
-import { CreateProductDto, UpdateProductDto } from './dto/request';
+import { CreateMultipleProductsDto, CreateProductDto, UpdateProductDto } from './dto/request';
 
 @Injectable()
 export class MarketplaceService {
@@ -14,16 +14,23 @@ export class MarketplaceService {
     ) {}
 
     async createProduct(dto: CreateProductDto) {
-        const productEntity = this.productRepository.create({
-            name: dto.name,
-            price: dto.price,
-            imageUrl: dto.imageUrl,
-            description: dto.description
-        });
+        const productEntity = this.productRepository.create(dto);
 
         await this.productRepository.save(productEntity);
 
         return new ResponseDto({ message: 'Product created successfully' });
+    }
+
+    async createMultipleProducts(dto: CreateMultipleProductsDto) {
+        const promiseSaveProducts = dto.products.map((product) => {
+            const productEntity = this.productRepository.create(product);
+
+            return this.productRepository.save(productEntity);
+        });
+
+        await Promise.all(promiseSaveProducts);
+
+        return new ResponseDto({ message: 'Products created successfully' });
     }
 
     async getAllProducts() {
