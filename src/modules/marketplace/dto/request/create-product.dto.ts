@@ -11,5 +11,8 @@ export class CreateProductDto {
     imageUrl: string;
 
     @StringField()
+    type: string;
+
+    @StringField()
     description: string;
 }
