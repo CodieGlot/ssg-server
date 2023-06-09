@@ -99,10 +99,24 @@ export class ApiConfigService {
         };
     }
 
+    get webUrlConfig() {
+        return {
+            webUrl: this.getString('WEB_URL')
+        };
+    }
+
     get ablyConfig() {
         return {
             rootKey: this.getString('ABLY_ROOT_KEY'),
             clientKey: this.getString('ABLY_CLIENT_KEY')
+        };
+    }
+
+    get candypayConfig() {
+        return {
+            publicApiKey: this.getString('CANDYPAY_PUBLIC_KEY'),
+            privateApiKey: this.getString('CANDYPAY_PRIVATE_KEY'),
+            webhookSecret: this.getString('CANDYPAY_WEBHOOK')
         };
     }
 

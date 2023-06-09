@@ -1,12 +1,7 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post } from '@nestjs/common';
-import {
-    ApiAcceptedResponse,
-    ApiCreatedResponse,
-    ApiOkResponse,
-    ApiOperation,
-    ApiTags
-} from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Param, Patch, Post, Req } from '@nestjs/common';
+import { ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+import { Request } from 'express';
 import { ResponseDto } from '../../common/dto';
 import { UserRole } from '../../constants';
 import { Auth, AuthUser } from '../../decorators';
@@ -87,5 +82,34 @@ export class MarketplaceController {
     @ApiOperation({ summary: 'Delete product by id' })
     async deleteProductById(@Param('id') id: string) {
         return this.marketplaceService.deleteProductById(id);
+    }
+
+    @Post('payment/candypay')
+    @Auth([UserRole.ADMIN, UserRole.USER])
+    @HttpCode(HttpStatus.OK)
+    @ApiOkResponse({
+        type: ResponseDto,
+        description: 'Create payment session'
+    })
+    @ApiOperation({ summary: 'Create payment session' })
+    async paymentByCandypay() {
+        return this.marketplaceService.paymentByCandypay();
+    }
+
+    @Get('payment/:sessionId')
+    @Auth([UserRole.ADMIN, UserRole.USER])
+    @HttpCode(HttpStatus.OK)
+    @ApiOkResponse({
+        type: ResponseDto,
+        description: 'Get metadata of session by id'
+    })
+    @ApiOperation({ summary: 'Get metadata of session by id' })
+    async getMetadataOfSession(@Param('sessionId') id: string) {
+        return this.marketplaceService.getMetadataOfSession(id);
+    }
+
+    @Post('payment/webhook')
+    async updatePaymentInfo(@Req() req: Request) {
+        return this.marketplaceService.updatePaymentInfo(req);
     }
 }
