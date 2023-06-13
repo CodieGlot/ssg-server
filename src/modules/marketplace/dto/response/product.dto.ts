@@ -1,3 +1,4 @@
+import { ProductType } from '../../../../constants';
 import { AbstractDto } from '../../../../common/dto/abstract.dto';
 import { Product } from '../../entities';
 
@@ -8,7 +9,7 @@ export class ProductDto extends AbstractDto {
 
     imageUrl: string;
 
-    type: string;
+    type: ProductType;
 
     description: string;
 

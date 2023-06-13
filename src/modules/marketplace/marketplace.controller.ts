@@ -83,33 +83,4 @@ export class MarketplaceController {
     async deleteProductById(@Param('id') id: string) {
         return this.marketplaceService.deleteProductById(id);
     }
-
-    @Post('payment/candypay')
-    @Auth([UserRole.ADMIN, UserRole.USER])
-    @HttpCode(HttpStatus.OK)
-    @ApiOkResponse({
-        type: ResponseDto,
-        description: 'Create payment session'
-    })
-    @ApiOperation({ summary: 'Create payment session' })
-    async paymentByCandypay() {
-        return this.marketplaceService.paymentByCandypay();
-    }
-
-    @Get('payment/:sessionId')
-    @Auth([UserRole.ADMIN, UserRole.USER])
-    @HttpCode(HttpStatus.OK)
-    @ApiOkResponse({
-        type: ResponseDto,
-        description: 'Get metadata of session by id'
-    })
-    @ApiOperation({ summary: 'Get metadata of session by id' })
-    async getMetadataOfSession(@Param('sessionId') id: string) {
-        return this.marketplaceService.getMetadataOfSession(id);
-    }
-
-    @Post('payment/webhook')
-    async updatePaymentInfo(@Req() req: Request) {
-        return this.marketplaceService.updatePaymentInfo(req);
-    }
 }

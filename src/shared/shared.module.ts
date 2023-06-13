@@ -9,7 +9,6 @@ import { EmailBuilder } from './services/email-services/email.builder';
 import { NodemailerService } from './services/email-services/nodemailer.service';
 import { GeneratorService } from './services/generator.service';
 import { ValidatorService } from './services/validator.service';
-import { CandypayService } from './services/candypay.service';
 
 const providers = [
     ApiConfigService,
@@ -18,8 +17,7 @@ const providers = [
     GeneratorService,
     AwsSESService,
     EmailBuilder,
-    NodemailerService,
-    CandypayService
+    NodemailerService
 ];
 
 @Global()

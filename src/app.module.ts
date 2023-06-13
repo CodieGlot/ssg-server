@@ -11,6 +11,7 @@ import { ApiConfigService } from './shared/services/api-config.service';
 import { SharedModule } from './shared/shared.module';
 import { BlogsModule } from './modules/blogs/blogs.module';
 import { MarketplaceModule } from './modules/marketplace/marketplace.module';
+import { QuizModule } from './modules/quiz/quiz.module';
 
 @Module({
     imports: [
@@ -27,7 +28,8 @@ import { MarketplaceModule } from './modules/marketplace/marketplace.module';
         UsersModule,
         ScheduleModule.forRoot(),
         BlogsModule,
-        MarketplaceModule
+        MarketplaceModule,
+        QuizModule
     ],
     providers: []
 })

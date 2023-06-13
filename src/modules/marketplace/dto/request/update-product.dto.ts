@@ -1,4 +1,5 @@
-import { NumberFieldOptional, StringFieldOptional } from '../../../../decorators';
+import { ProductType } from '../../../../constants';
+import { EnumField, NumberFieldOptional, StringFieldOptional } from '../../../../decorators';
 
 export class UpdateProductDto {
     @StringFieldOptional()
@@ -9,6 +10,9 @@ export class UpdateProductDto {
 
     @StringFieldOptional()
     imageUrl: string;
+
+    @EnumField(() => ProductType)
+    type: ProductType;
 
     @StringFieldOptional()
     description: string;
