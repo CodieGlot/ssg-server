@@ -11,7 +11,7 @@ export class Blog extends AbstractEntity<BlogDto> {
     @Column()
     postId: string;
 
-    @Column({ type: 'int', default: 0 })
+    @Column({ type: 'int', default: 50 })
     likes: number;
 
     @OneToMany(() => Comment, (comment) => comment.blog, {

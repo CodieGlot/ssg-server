@@ -6,7 +6,7 @@ import { UserRole } from '../../constants';
 import { Auth, AuthUser } from '../../decorators';
 import { BlogsService } from './blogs.service';
 import { Blog } from './entities';
-import { AddCommentDto } from './dto/request';
+import { AddCommentDto, CreateBlogDto } from './dto/request';
 import { User } from '../users/entities';
 
 @ApiTags('Blogs')
@@ -24,6 +24,17 @@ export class BlogsController {
     @ApiOperation({ summary: 'Get all blogs' })
     async getAllBlogs() {
         return this.blogsService.findAllBlogs();
+    }
+
+    @Post('create')
+    @HttpCode(HttpStatus.OK)
+    @ApiOkResponse({
+        type: ResponseDto,
+        description: 'Craete new blog'
+    })
+    @ApiOperation({ summary: 'Create new blog' })
+    async createBlog(@Body() createBlogDto: CreateBlogDto) {
+        return this.blogsService.createBlog(createBlogDto);
     }
 
     @Get(':id')

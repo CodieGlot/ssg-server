@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 
 import { ResponseDto } from '../../common/dto';
 import { Blog, Comment } from './entities';
-import { AddCommentDto } from './dto/request';
+import { AddCommentDto, CreateBlogDto } from './dto/request';
 
 @Injectable()
 export class BlogsService {
@@ -29,6 +29,14 @@ export class BlogsService {
         }
 
         return blog;
+    }
+
+    async createBlog(dto: CreateBlogDto) {
+        const blogEntity = await this.blogRepository.create(dto);
+
+        await this.blogRepository.save(blogEntity);
+
+        return new ResponseDto({ message: 'Create blog successfully' });
     }
 
     async likeBlog(postId: string) {
