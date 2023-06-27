@@ -19,10 +19,10 @@ export class BlogsService {
         return this.blogRepository.find();
     }
 
-    async findBlogById(id: string, getComments = true) {
+    async findBlogById(postId: string, getComments = true) {
         const blog = getComments
-            ? await this.blogRepository.findOne({ where: { id }, relations: ['comments'] })
-            : await this.blogRepository.findOne({ where: { id } });
+            ? await this.blogRepository.findOne({ where: { postId }, relations: ['comments'] })
+            : await this.blogRepository.findOne({ where: { postId } });
 
         if (!blog) {
             throw new NotFoundException('Blog not found');
@@ -31,16 +31,16 @@ export class BlogsService {
         return blog;
     }
 
-    async likeBlog(id: string) {
-        const blog = await this.findBlogById(id, false);
+    async likeBlog(postId: string) {
+        const blog = await this.findBlogById(postId, false);
 
-        await this.blogRepository.update({ id }, { likes: blog.likes + 1 });
+        await this.blogRepository.update({ postId }, { likes: blog.likes + 1 });
 
         return new ResponseDto({ message: 'Like blog successfully' });
     }
 
-    async addComment(id: string, username: string, dto: AddCommentDto) {
-        const blog = await this.findBlogById(id);
+    async addComment(postId: string, username: string, dto: AddCommentDto) {
+        const blog = await this.findBlogById(postId);
 
         const commentEntity = this.commentRepository.create({ username, content: dto.content });
 
