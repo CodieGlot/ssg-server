@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { ResponseDto } from '../../common/dto';
-import type { User } from '../users/entities';
 import { Blog, Comment } from './entities';
 import { AddCommentDto } from './dto/request';
 
@@ -32,10 +31,18 @@ export class BlogsService {
         return blog;
     }
 
-    async addComment(id: string, dto: AddCommentDto) {
+    async likeBlog(id: string) {
+        const blog = await this.findBlogById(id, false);
+
+        await this.blogRepository.update({ id }, { likes: blog.likes + 1 });
+
+        return new ResponseDto({ message: 'Like blog successfully' });
+    }
+
+    async addComment(id: string, username: string, dto: AddCommentDto) {
         const blog = await this.findBlogById(id);
 
-        const commentEntity = this.commentRepository.create({ username: 'Anonymous', content: dto.content });
+        const commentEntity = this.commentRepository.create({ username, content: dto.content });
 
         blog.comments.push(commentEntity);
 
